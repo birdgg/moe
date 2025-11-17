@@ -1,37 +1,78 @@
-cabal-version:      3.4
-name:               bangumi-hs
-version:            0.1.0.0
--- synopsis:
--- description:
-license:            MIT
-license-file:       LICENSE
-author:             birdgg
-maintainer:         birdeggegg@gmail.com
--- copyright:
-build-type:         Simple
-extra-doc-files:    CHANGELOG.md
--- extra-source-files:
+cabal-version: 3.4
+name: moe
+version: 0.1.0.0
+license: MIT
+license-file: LICENSE
+author: birdgg
+maintainer: birdeggegg@gmail.com
+build-type: Simple
+extra-doc-files: CHANGELOG.md
 
 common warnings
-    ghc-options: -Wall
+  ghc-options: -Wall
+
+common common-extensions
+  default-extensions:
+    DuplicateRecordFields
+    OverloadedRecordDot
+    OverloadedStrings
+    StrictData
+    ViewPatterns
 
 library
-    import:           warnings
-    exposed-modules:  MyLib
-    -- other-modules:
-    -- other-extensions:
-    build-depends:    base ^>=4.21.0.0
-    hs-source-dirs:   src
-    default-language: GHC2024
+  import: warnings, common-extensions
+  -- cabal-gild: discover src
+  exposed-modules:
+    Moe.Environment
+    Moe.Logging
+    Moe.Model.Bangumi.Types
+    MoeWeb.API.Routes
+    MoeWeb.API.Routes.Bangumi
+    MoeWeb.API.Server
+    MoeWeb.API.Server.Bangumi
+    MoeWeb.Routes
+    MoeWeb.Server
+    MoeWeb.Types
+
+  build-depends:
+    aeson,
+    base ^>=4.21.0.0,
+    effectful,
+    effectful-core,
+    effectful-plugin,
+    effectful-th,
+    log-base,
+    log-effectful,
+    monad-time-effectful,
+    mtl,
+    relude,
+    resource-pool,
+    servant,
+    servant-server,
+    sqlite-simple,
+    text-display,
+    wai,
+    wai-log,
+    warp,
+
+  mixins:
+    base hiding (Prelude),
+    relude (Relude as Prelude),
+    relude,
+
+  hs-source-dirs: src
+  default-language: GHC2024
+  default-extensions:
+    OverloadedStrings
 
 executable bangumi-hs
-    import:           warnings
-    main-is:          Main.hs
-    -- other-modules:
-    -- other-extensions:
-    build-depends:
-        base ^>=4.21.0.0,
-        bangumi-hs
+  import: warnings
+  main-is: Main.hs
+  -- other-modules:
+  -- other-extensions:
+  build-depends:
+    base ^>=4.21.0.0,
+    moe,
 
-    hs-source-dirs:   app
-    default-language: GHC2024
+  hs-source-dirs: app
+  default-language: GHC2024
