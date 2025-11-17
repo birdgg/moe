@@ -65,11 +65,9 @@ library
   default-extensions:
     OverloadedStrings
 
-executable bangumi-hs
+executable moe-server
   import: warnings
   main-is: Main.hs
-  -- other-modules:
-  -- other-extensions:
   build-depends:
     base ^>=4.21.0.0,
     moe,
