@@ -12,17 +12,20 @@ common warnings
   ghc-options: -Wall
 
 common common-extensions
+  default-language: GHC2024
   default-extensions:
     DuplicateRecordFields
     OverloadedRecordDot
     OverloadedStrings
     StrictData
+    TypeFamilies
     ViewPatterns
 
 library
   import: warnings, common-extensions
   -- cabal-gild: discover src
   exposed-modules:
+    Effectful.Sqlite
     Moe.Environment
     Moe.Logging
     Moe.Model.Bangumi.Types
@@ -51,6 +54,8 @@ library
     servant-server,
     sqlite-simple,
     text-display,
+    time,
+    unliftio-pool,
     wai,
     wai-log,
     warp,
@@ -61,16 +66,12 @@ library
     relude,
 
   hs-source-dirs: src
-  default-language: GHC2024
-  default-extensions:
-    OverloadedStrings
 
 executable moe-server
-  import: warnings
+  import: warnings,common-extensions
   main-is: Main.hs
   build-depends:
     base ^>=4.21.0.0,
     moe,
 
   hs-source-dirs: app
-  default-language: GHC2024
